@@ -13,10 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3aifcv!rrh0&lx91+1-8w1p+rs7lcywyl!&xg#d&rs_1&g@)la'
 
 # DEBUG True for development; False for production
-DEBUG = True
+DEBUG = False
 
 # Add your domain(s) here for production
-ALLOWED_HOSTS = []  # e.g. ['yourdomain.com', 'www.yourdomain.com']
+ALLOWED_HOSTS = ['*']  # e.g. ['yourdomain.com', 'www.yourdomain.com']
 
 # Application definition
 INSTALLED_APPS = [
