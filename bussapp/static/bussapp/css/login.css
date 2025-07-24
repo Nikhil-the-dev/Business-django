@@ -1,0 +1,87 @@
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #070b11;
+            letter-spacing: 1px;
+        }
+
+        .form input[type="email"],
+        .form input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form input[type="submit"]:hover {
+            background-color: #0b5ed7;
+        }
+
+        .form a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form a:hover {
+            text-decoration: underline;
+        }
+
+        .messages {
+            margin-top: 15px;
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+        }
+
+        .alert-success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .alert-error,
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #842029;
+        }

@@ -1,0 +1,28 @@
+{% extends 'bussapp/home.html' %}
+{% block main %}
+<div class="container py-5" style="margin-top: -200px;">
+    <div class="row justify-content-center" >
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-4">Update Vehicle</h5>
+                    <form method="post" autocomplete="off">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="vehicleNumber" class="form-label">Vehicle Number</label>
+                            <input type="text" class="form-control" id="vehicleNumber" value="{{vehicle.Add_vehicle_numbers}}" name="Vehicle_number"
+                                placeholder="Enter Vehicle Number" required>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

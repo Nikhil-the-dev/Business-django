@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 5px;
+            text-align: center;
+        }
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h3>Archna Roadlines - Vehicle List</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Vehicle Number</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in record %}
+            <tr>
+                <td>{{ r.Add_vehicle_numbers }}</td>
+                <td>{{ r.Date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

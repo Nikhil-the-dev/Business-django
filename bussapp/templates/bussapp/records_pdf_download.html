@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Record List - Archna Roadlines</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #000;
+            background-color: #fff;
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .download-button {
+            padding: 10px 16px;
+            border: 1px solid #000;
+            background-color: #fff;
+            text-decoration: none;
+            color: #000;
+            font-size: 14px;
+            text-align: center;
+            white-space: nowrap;
+            flex: 1 1 160px;
+        }
+
+        .download-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #eaeaea;
+            font-weight: bold;
+        }
+
+        .no-records {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 20px;
+            }
+
+            .download-button {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 18px;
+            }
+
+            .download-button {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <div class="page-title"> <h3>Archna Roadlines - Fuel Record List</h3></div>
+
+        <!-- Buttons -->
+        <div class="button-container">
+            <a href="{% url 'records_generate_pdf' %}?q={{ request.GET.q }}&start_date={{ request.GET.start_date }}&end_date={{ request.GET.end_date }}&filter={{ request.GET.filter }}" class="download-button">
+                📄 Download PDF
+            </a>
+            
+            <a href="records_generate_excel" class="download-button">📊 Download Excel</a>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vehicle Number</th>
+                        <th>Date</th>
+                        <th>Total Fuel (Ltr)</th>
+                        <th>Fuel Rate</th>
+                        <th>Total Amount</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in record %}
+                    <tr>
+                        <td>{{ r.Vehicle_number }}</td>
+                        <td>{{ r.Fuel_date }}</td>
+                        <td class="fuel-ltr">{{ r.Fuel_Ltr }}</td>
+                        <td>{{ r.Fuel_rate_per_ltr }}</td>
+                        <td class="fuel-price">{{ r.Total_fuel_price }}</td>
+                        <td>{{ r.Remark }}</td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="no-records">No records to show.</td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="6"><strong>Total Fuel (Ltr)</strong> : <strong><span
+                                    id="totalFuelLtr">0</span></strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6"><strong>Total Amount</strong>:<strong><span id="totalFuelPrice">0</span></strong></td>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let totalLtr = 0;
+            let totalPrice = 0;
+
+            document.querySelectorAll(".fuel-ltr").forEach(cell => {
+                const value = parseFloat(cell.textContent);
+                if (!isNaN(value)) totalLtr += value;
+            });
+
+            document.querySelectorAll(".fuel-price").forEach(cell => {
+                const value = parseFloat(cell.textContent);
+                if (!isNaN(value)) totalPrice += value;
+            });
+
+            document.getElementById("totalFuelLtr").textContent = totalLtr.toFixed(2);
+            document.getElementById("totalFuelPrice").textContent = totalPrice.toFixed(2);
+        });
+    </script>
+
+</body>
+
+</html>

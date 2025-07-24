@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    body::before {
+        content: "";
+        background-image: url('https://truckcdn.cardekho.com/in/eicher/pro-3015/eicher-pro-3015-65791.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8; /* ✅ Adjust this value: lower = more faded */
+        z-index: -1;
+    }
+</style>
+
+
+
+    <!-- Notification CSS & JS -->
+    <link rel="stylesheet" href="./static/bussapp/css/notification.css">
+    <script src="./static/bussapp/js/notification.js"></script>
+    <script src="./static/bussapp/js/searchbox.js"></script>
+    
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./static/bussapp/css/insert.css">
+    <link rel="stylesheet" href="./static/bussapp/css/home.css">
+    <link rel="stylesheet" href="./static/bussapp/css/searchbox.css">
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <title>Home</title>
+</head>
+<body>
+
+<!-- Notifying Messages -->
+<div id="messages">
+    {% for message in messages %}
+    <div class="notification alert alert-success">
+        <span>{{ message }}</span>
+        <button class="close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Navigation -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/home">Archna Roadlines</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if request.path == '/home' %}active{% endif %}">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item {% if request.path == '/add_vehicle' %}active{% endif %}">
+                    <a class="nav-link" href="/add_vehicle">Add Vehicle</a>
+                </li>
+                <li class="nav-item {% if request.path == '/enter_data' %}active{% endif %}">
+                    <a class="nav-link" href="/enter_data">Enter Data</a>
+                </li>
+                <li class="nav-item {% if request.path == '/view_records' %}active{% endif %}">
+                    <a class="nav-link" href="/view_records">Records</a>
+                </li>
+                <li class="nav-item {% if request.path == '/vehicle_list' %}active{% endif %}">
+                    <a class="nav-link" href="/vehicle_list">Vehicle List</a>
+                </li>
+                
+
+            </ul>
+            <form action="/logout" method="post">
+                {% csrf_token %}
+                <div class="mx-2">
+                    <button class="btn-danger">Log out</button>
+                </div>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main class="d-flex justify-content-center align-items-center vh-100">
+    {% block main %}
+    <div class="container">
+        <div class="options">
+            <a href="/add_vehicle">Add Vehicle</a>
+            <a href="/enter_data">Enter Data</a>
+            <a href="/view_records">View Records</a>
+            <a href="/vehicle_list">Vehicle List</a>
+        </div>
+    </div>
+    {% endblock %}
+</main>
+
+<footer class="container">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p>© 2024-2025 Archna Roadlines, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+<!-- JS Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Select2 Initialization -->
+<script>
+    $(document).ready(function () {
+        $('.js-multiple-select').select2({
+            placeholder: "Select vehicles",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>
+
+<!-- Additional Custom Scripts -->
+<script src="./static/bussapp/js/multiplication.js"></script>
+<script src="./static/bussapp/js/searchbox.js"></script>
+
+</body>
+</html>

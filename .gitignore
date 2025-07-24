@@ -1,0 +1,18 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+
+# Environment
+.env
+venv/
+env/
+
+# Static / Media
+staticfiles/
+media/
+
+# VS Code / MacOS
+.vscode/
+.DS_Store

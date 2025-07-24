@@ -1,0 +1,143 @@
+{% extends 'bussapp/home.html' %}
+
+{% block main %}
+<div class="container py-4">
+
+    <!-- Search by Vehicle Number -->
+    <form class="row justify-content-end mb-0" method="GET" action="{% url 'vehicle_search' %}">
+        <div class="col-md-3 col-sm-4">
+            <div class="input-group">
+                <input class="form-control" name="q" type="search" placeholder="Search by vehicle Number"
+                    value="{{ request.GET.q }}" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operation Dropdown -->
+        <div class="col-md-3 col-sm-4 mb-0 nav-item dropdown">
+            <a class="nav-link dropdown-toggle btn btn-sm btn-outline-success" href="#" role="button"
+                data-toggle="dropdown" aria-expanded="false">
+                Operation
+            </a>
+            <div class="dropdown-menu">
+                {% comment %} Toggle Multiple Selection {% endcomment %}
+                {% if request.GET.mode == "select" %}
+                <a class="dropdown-item active" href="?{% if request.GET.q %}q={{ request.GET.q|urlencode }}{% endif %}
+                      {% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}
+                      {% if request.GET.end_date %}&end_date={{ request.GET.end_date }}{% endif %}
+                      {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}">
+                    Multiple Selection
+                </a>
+                {% else %}
+                <a class="dropdown-item" href="?mode=select{% if request.GET.q %}&q={{ request.GET.q|urlencode }}{% endif %}
+                              {% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}
+                              {% if request.GET.end_date %}&end_date={{ request.GET.end_date }}{% endif %}
+                              {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}">
+                    Multiple Selection
+                </a>
+                {% endif %}
+
+                {% comment %} Filter Toggle {% endcomment %}
+                {% if request.GET.q %}
+                <a class="dropdown-item" href="#" id="toggleFilter">Filter</a>
+                {% else %}
+                {% if request.GET.filter == "on" %}
+                <a class="dropdown-item" href="vehicle_list">Reset Filter</a>
+                {% else %}
+                <a class="dropdown-item" href="#" id="toggleFilter">Filter</a>
+                {% endif %}
+                {% endif %}
+
+                {% comment %} PDF Download {% endcomment %}
+                <a class="dropdown-item" target="_blank" href="{% url 'vehicles_pdf_download_view' %}?{% if request.GET.q %}q={{ request.GET.q|urlencode }}{% endif %}
+                                             {% if request.GET.start_date %}&start_date={{ request.GET.start_date }}{% endif %}
+                                             {% if request.GET.end_date %}&end_date={{ request.GET.end_date }}{% endif %}
+                                             {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}">
+                    Download
+                </a>
+            </div>
+        </div>
+
+    </form>
+
+    <!-- Vehicle List -->
+    <div class="card shadow-sm ">
+        <div class="card-body">
+            <h5 class="card-title mb-4 text-center">Vehicle List</h5>
+
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <form method="POST" action="/multiple_vehicles_delete">
+                    {% csrf_token %}
+                    <input type="hidden" name="q" value="{{ request.GET.q }}">
+                    <input type="hidden" name="mode" value="{{ request.GET.mode }}">
+
+                    <table class="table table-bordered table-hover align-middle text-center mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                {% if request.GET.mode == 'select' %}
+                                <th>Select All <input type="checkbox" id="selectAll"></th>
+                                {% endif %}
+                                <th>Vehicle Number</th>
+                                <th>Date</th>
+                                {% if not request.GET.mode == 'select' %}
+                                <th colspan="2">Operation</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for v in vehicle_list %}
+                            <tr>
+                                {% if request.GET.mode == 'select' %}
+                                <td><input type="checkbox" name="selected_items" value="{{ v.id }}"></td>
+                                {% endif %}
+                                <td>{{ v.Add_vehicle_numbers }}</td>
+                                <td>{{ v.Date }}</td>
+                                {% if not request.GET.mode == 'select' %}
+                                <td>
+                                    <a href="/update_vehicle?q={{ v.id }}"
+                                        class="btn btn-sm btn-outline-warning">Update</a>
+                                </td>
+                                <td>
+                                    <a href="/delete_vehicle?q={{ v.id }}"
+                                        class="btn btn-sm btn-outline-danger">Delete</a>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-muted">No records found.</td>
+                            </tr>
+                            {% endfor %}
+
+                            {% if request.GET.mode != 'select' %}
+                            <tr>
+                                <td colspan="8">
+                                    <a href="/add_vehicle" class="btn btn-sm btn-outline-success">Add Vehicle</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+                    {% if request.GET.mode == 'select' %}
+                    <div class="text-center mt-2">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete Selected</button>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Select All Logic
+    document.getElementById('selectAll')?.addEventListener('change', function () {
+        const checkboxes = document.querySelectorAll('input[name="selected_items"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+
+{% endblock %}

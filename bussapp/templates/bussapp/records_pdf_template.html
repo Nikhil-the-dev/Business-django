@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 5px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Fuel Record List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Vehicle Number</th>
+                <th>Date</th>
+                <th>Total Fuel (Ltr)</th>
+                <th>Fuel Rate</th>
+                <th>Total Amount</th>
+                <th>Remark</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in record %}
+            <tr>
+                <td>{{ r.Vehicle_number }}</td>
+                <td>{{ r.Fuel_date }}</td>
+                <td class="fuel-ltr">{{ r.Fuel_Ltr }}</td>
+                <td>{{ r.Fuel_rate_per_ltr }}</td>
+                <td class="fuel-price">{{ r.Total_fuel_price }}</td>
+                <td>{{ r.Remark }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="6"><strong>Total Fuel (Ltr)</strong> : {{ total_fuel_ltr|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td colspan="6"><strong>Total Amount</strong> : {{ total_fuel_price|floatformat:2 }}</td>
+            </tr>
+            
+            
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>

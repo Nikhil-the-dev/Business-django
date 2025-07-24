@@ -1,0 +1,47 @@
+{% extends 'bussapp/home.html' %}
+{% block main %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="post" autocomplete="off">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Vehicle Number</label>
+                            <select class="form-control" name="vehicle_number" required>
+                                <option value="">Select Vehicle Number</option>
+                                {% for v in record %}
+                                    <option value="{{ v.Add_vehicle_numbers }}">{{ v.Add_vehicle_numbers }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Total Fuel Quantity (ltr)</label>
+                            <input type="number" step="any" class="form-control" name="fuel_ltr" placeholder="Enter Total Fuel Quantity" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fuel Rate per Liter</label>
+                            <input type="number" step="any" class="form-control" name="fuel_rate_per_ltr" placeholder="Enter Fuel Rate" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Total Fuel Amount</label>
+                            <input type="text" class="form-control" name="total_fuel_price" placeholder="Total Fuel Amount" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Remark</label>
+                            <textarea class="form-control" name="remark" placeholder="Enter Remark..." rows="3"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <input type="submit" class="btn btn-primary" value="Submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
