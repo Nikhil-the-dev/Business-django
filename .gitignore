@@ -10,7 +10,7 @@ venv/
 env/
 
 # Static / Media
-staticfiles/
+staticfiles/]
 media/
 
 # VS Code / MacOS
